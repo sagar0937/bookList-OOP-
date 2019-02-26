@@ -1,5 +1,6 @@
 //click on submit
 const submitBtn = document.querySelector('.submitBtn');
+const list = document.querySelector('#book-list');
 
 //book constrcutor
 function Book(title, author, isbn) {
@@ -11,6 +12,7 @@ function Book(title, author, isbn) {
 //ui constrcutor
 function UI() { }
 
+//adding method on prototype
 UI.prototype.addBookList = function (book) {
     const list = document.querySelector('#book-list');
     const tr = document.createElement('tr');
@@ -20,6 +22,14 @@ UI.prototype.addBookList = function (book) {
                     <td><a href="#" class ="delete">X</a></td>`;
     list.appendChild(tr);
     clearFields();
+}
+
+//to delete
+UI.prototype.deleteBook = function(target) {
+    if(target.className == 'delete'){
+        target.parentElement.parentElement.remove();
+        showMessage(`book removed successfully`,'success')
+    }
 }
 
 //show message
@@ -74,7 +84,13 @@ function addValues(e) {
 }
 
 
-
+// to delete item
+document.querySelector('#book-list').addEventListener('click',function(e){
+    //create insatnces  
+    const ui = new UI();
+    ui.deleteBook(e.target);
+    e.preventDefault();
+})
 
 
 
